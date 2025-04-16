@@ -1,11 +1,12 @@
 import pygame
 from constants import *
+from player import Player
 
 def main():
     pygame.init()
     print("Starting Asteroids!")
 
-    # Set Display settings
+    # Set Display settings & instantiate screen
     print(f"Screen width: {SCREEN_WIDTH}\n"
           f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -13,6 +14,9 @@ def main():
     # Set fps
     clock = pygame.time.Clock()
     dt = 0
+
+    # Instantiate player at screen center
+    player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     
     while True:
         # Check for quit events
@@ -22,6 +26,12 @@ def main():
         
         # Placeholder screen method
         screen.fill("black")
+
+        # Draw player
+        player.draw(screen)
+
+        # Flip screen buffer to display new draw data
+        pygame.display.flip()
 
         # Set delta time (seconds)
         dt = clock.tick(60)/1000
