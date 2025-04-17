@@ -27,6 +27,7 @@ def main():
         # Placeholder screen method
         screen.fill("black")
 
+        player.update(dt)
         # Draw player
         player.draw(screen)
 
