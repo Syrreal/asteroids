@@ -15,6 +15,13 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    # Set up loop containers
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    # Add sprites types to corresponding containers
+    Player.containers = (updateable, drawable)
+
     # Instantiate player at screen center
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     
@@ -27,9 +34,13 @@ def main():
         # Placeholder screen method
         screen.fill("black")
 
-        player.update(dt)
-        # Draw player
-        player.draw(screen)
+        # Update objects
+        for object in updateable:
+            object.update(dt)
+
+        # Draw sprites
+        for sprite in drawable:
+            sprite.draw(screen)
 
         # Flip screen buffer to display new draw data
         pygame.display.flip()
