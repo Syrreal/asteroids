@@ -4,6 +4,9 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 
+def game_over():
+    print("Game over!")
+
 def main():
     pygame.init()
     print("Starting Asteroids!")
@@ -43,6 +46,11 @@ def main():
         # Update objects
         for object in updateable:
             object.update(dt)
+        
+        for asteroid in asteroids:
+            if asteroid.is_colliding(player):
+                game_over()
+                return
 
         # Draw sprites
         for sprite in drawable:
