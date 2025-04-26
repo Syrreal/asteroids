@@ -1,4 +1,5 @@
 import pygame
+import pygame.freetype
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -60,7 +61,7 @@ def main():
                     hits.append((asteroid, projectile))
         
         for asteroid, projectile in hits:
-            asteroid.kill()
+            asteroid.split()
             projectile.kill()
 
         # Draw sprites
