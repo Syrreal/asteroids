@@ -17,6 +17,11 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}\n"
           f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
+    if not pygame.freetype.get_init():
+        pygame.freetype.init()
+    score_display = pygame.freetype.SysFont(pygame.freetype.get_default_font(), 25)
+    score = 0
 
     # Set fps
     clock = pygame.time.Clock()
@@ -47,6 +52,9 @@ def main():
         # Placeholder screen method
         screen.fill("black")
 
+        # Display score
+        score_display.render_to(screen, (SCREEN_WIDTH / 2, 75), str(score), "white", "black")
+
         # Update objects
         for object in updateable:
             object.update(dt)
@@ -61,7 +69,8 @@ def main():
                     hits.append((asteroid, projectile))
         
         for asteroid, projectile in hits:
-            asteroid.split()
+            # smallest asteroids return points when "split"
+            score += asteroid.split()
             projectile.kill()
 
         # Draw sprites

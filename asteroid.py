@@ -15,6 +15,7 @@ class Asteroid(CircleShape):
         self.position += self.velocity * dt
     
     def split(self):
+        self.kill()
         # Each asteroid is a multiple of min radius
         new_radius = self.radius - ASTEROID_MIN_RADIUS
         if new_radius:
@@ -25,4 +26,4 @@ class Asteroid(CircleShape):
             asteroid2 = Asteroid(self.position[0], self.position[1], new_radius)
             asteroid2.velocity = self.velocity.rotate(-rotation) * 1.2
         
-        self.kill()
+        return (ASTEROID_MAX_POINTS // ( ASTEROID_KINDS - (ASTEROID_MAX_RADIUS / self.radius) + 1))
