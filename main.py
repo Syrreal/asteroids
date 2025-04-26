@@ -3,6 +3,7 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from projectile import Projectile
 
 def game_over():
     print("Game over!")
@@ -24,11 +25,13 @@ def main():
     updateable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    projectiles = pygame.sprite.Group()
 
     # Add sprites types to corresponding containers
     Player.containers = (updateable, drawable)
     Asteroid.containers = (updateable, drawable, asteroids)
     AsteroidField.containers = (updateable)
+    Projectile.containers = (updateable, drawable, projectiles)
 
     # Instantiate player at screen center
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
@@ -47,10 +50,18 @@ def main():
         for object in updateable:
             object.update(dt)
         
+        hits = []
         for asteroid in asteroids:
             if asteroid.is_colliding(player):
                 game_over()
                 return
+            for projectile in projectiles:
+                if asteroid.is_colliding(projectile):
+                    hits.append((asteroid, projectile))
+        
+        for asteroid, projectile in hits:
+            asteroid.kill()
+            projectile.kill()
 
         # Draw sprites
         for sprite in drawable:
